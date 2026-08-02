@@ -1,24 +1,27 @@
 from typing import TypedDict, List, Dict, Optional
 
 
-class CareerCompassState(TypedDict):
-    """
-    Shared state passed between all LangGraph agents.
-    """
+class Offer(TypedDict):
+    company: str
+    role: str
+    ctc: float
+    location: str
 
-    # User Information
+
+class CareerCompassState(TypedDict):
+    # User Input
     student_goal: str
     higher_studies: bool
     preferred_location: str
     preferred_work_style: str
 
     # Placement Offers
-    offers: List[Dict]
+    offers: List[Offer]
 
     # Agent Outputs
     goal_analysis: Optional[Dict]
     offer_analysis: Optional[Dict]
     preference_analysis: Optional[Dict]
 
-    # Final Output
+    # Final Recommendation
     recommendation: Optional[Dict]
