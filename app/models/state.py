@@ -1,27 +1,69 @@
-from typing import TypedDict, List, Dict, Optional
+from typing import List, Optional, Dict
+from pydantic import BaseModel, Field
 
 
-class Offer(TypedDict):
+# ----------------------------
+# Job Offer Model
+# ----------------------------
+
+class Offer(BaseModel):
     company: str
     role: str
     ctc: float
     location: str
 
 
-class CareerCompassState(TypedDict):
-    # User Input
-    student_goal: str
+# ----------------------------
+# Student Profile
+# ----------------------------
+
+class StudentProfile(BaseModel):
+    career_goal: str
     higher_studies: bool
     preferred_location: str
     preferred_work_style: str
 
-    # Placement Offers
+
+# ----------------------------
+# Goal Agent Output
+# ----------------------------
+
+class GoalAnalysis(BaseModel):
+    priorities: Dict[str, int]
+    reason: str
+
+
+# ----------------------------
+# Offer Agent Output
+# ----------------------------
+
+class OfferAnalysis(BaseModel):
+    company_scores: Dict[str, Dict]
+    summary: str
+
+
+# ----------------------------
+# Recommendation Output
+# ----------------------------
+
+class Recommendation(BaseModel):
+    recommended_company: str
+    confidence_score: float
+    explanation: str
+
+
+# ----------------------------
+# LangGraph State
+# ----------------------------
+
+class CareerCompassState(BaseModel):
+
+    student: StudentProfile
+
     offers: List[Offer]
 
-    # Agent Outputs
-    goal_analysis: Optional[Dict]
-    offer_analysis: Optional[Dict]
-    preference_analysis: Optional[Dict]
+    goal_analysis: Optional[GoalAnalysis] = None
 
-    # Final Recommendation
-    recommendation: Optional[Dict]
+    offer_analysis: Optional[OfferAnalysis] = None
+
+    recommendation: Optional[Recommendation] = None
