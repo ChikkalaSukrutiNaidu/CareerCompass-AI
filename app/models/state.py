@@ -177,10 +177,32 @@ class Recommendation(BaseModel):
 # Shared LangGraph State
 # ==========================================================
 class Scenario(BaseModel):
-    salary_priority: int | None = None
-    technology_priority: int | None = None
-    preferred_location: str | None = None
-    preferred_work_style: str | None = None
+    """
+    Stores user changes for What-If Analysis.
+    """
+
+    salary_priority: Optional[int] = None
+    technology_priority: Optional[int] = None
+    career_growth_priority: Optional[int] = None
+    preferred_location: Optional[str] = None
+    preferred_work_style: Optional[str] = None
+    higher_studies: Optional[bool] = None
+
+
+class ScenarioResult(BaseModel):
+    """
+    Stores comparison between original and new recommendation.
+    """
+
+    original_company: str
+    new_company: str
+
+    original_score: float
+    new_score: float
+
+    changed: bool
+
+    explanation: str
 
 class CareerCompassState(BaseModel):
 
@@ -209,5 +231,6 @@ class CareerCompassState(BaseModel):
 
     recommendation: Optional[Recommendation] = None
 
-    scenario: Scenario | None = None
-    scenario_result: Recommendation | None = None
+    scenario: Optional[Scenario] = None
+
+    scenario_result: Optional[ScenarioResult] = None
