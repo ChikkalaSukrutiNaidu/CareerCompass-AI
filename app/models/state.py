@@ -132,10 +132,19 @@ class DecisionEvaluation(BaseModel):
 # ==========================================================
 # Final Recommendation
 # ==========================================================
+class ScoreBreakdown(BaseModel):
+    technology: float
+    career_growth: float
+    salary: float
+    location: float
+    work_style: float
+    higher_studies: float
+
+
 class OfferScore(BaseModel):
     company: str
     total_score: float
-    breakdown: dict
+    breakdown: ScoreBreakdown
 
 class Recommendation(BaseModel):
 
@@ -167,6 +176,11 @@ class Recommendation(BaseModel):
 # ==========================================================
 # Shared LangGraph State
 # ==========================================================
+class Scenario(BaseModel):
+    salary_priority: int | None = None
+    technology_priority: int | None = None
+    preferred_location: str | None = None
+    preferred_work_style: str | None = None
 
 class CareerCompassState(BaseModel):
 
@@ -194,3 +208,6 @@ class CareerCompassState(BaseModel):
     offer_scores: Optional[List[OfferScore]] = None
 
     recommendation: Optional[Recommendation] = None
+
+    scenario: Scenario | None = None
+    scenario_result: Recommendation | None = None
