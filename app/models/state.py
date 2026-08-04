@@ -121,7 +121,6 @@ class RiskAnalysis(BaseModel):
     summary: str
 
 class DecisionEvaluation(BaseModel):
-
     best_offer: str
 
     strengths: List[str]
@@ -133,11 +132,36 @@ class DecisionEvaluation(BaseModel):
 # ==========================================================
 # Final Recommendation
 # ==========================================================
+class OfferScore(BaseModel):
+    company: str
+    total_score: float
+    breakdown: dict
 
 class Recommendation(BaseModel):
-    recommended_company: str
-    confidence_score: float
-    explanation: str
+
+    recommended_company: str = Field(
+        description="Best company for the student"
+    )
+
+    final_score: float = Field(
+        description="Overall score of the recommended offer"
+    )
+
+    strengths: List[str] = Field(
+        description="Reasons why this offer is recommended"
+    )
+
+    tradeoffs: List[str] = Field(
+        description="Things the student should consider"
+    )
+
+    runner_up: str = Field(
+        description="Second best offer"
+    )
+
+    explanation: str = Field(
+        description="Professional explanation of the recommendation"
+    )
 
 
 # ==========================================================
@@ -166,5 +190,7 @@ class CareerCompassState(BaseModel):
     risk_analysis: Optional[RiskAnalysis] = None
 
     decision_evaluation: Optional[DecisionEvaluation] = None
+
+    offer_scores: Optional[List[OfferScore]] = None
 
     recommendation: Optional[Recommendation] = None
